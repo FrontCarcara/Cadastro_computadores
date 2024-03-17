@@ -203,9 +203,31 @@ def adicionar():
     e_nome_setor = Entry(frame_detalhes, width=35, justify='left', relief='solid')    
     e_nome_setor.place(x=427, y=40) 
     
-    #entrada de setor
-    l_setor = Label(frame_detalhes, text="Setor", height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-    l_setor.place(x=424,y=10)
+    #Seletor de unidades
+    l_setor = Label(frame_detalhes, text="Unidade:", height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+    l_setor.place(x=424,y=75)
+    
+    #Pegando as unidades / COMBOBOX
+    
+    unidades = ['unidade 1', 'unidade 2']
+    unidade = []
+    
+    for i in unidades:
+        unidade.append(i)
+
+    c_unidade = ttk.Combobox(frame_detalhes, width=20, font=('Ivy 8 bold'))
+    c_unidade['values'] = (unidade)
+    c_unidade.place (x=427, y=100)
+    
+    
+    l_ramal = Label(frame_detalhes, text="Ramal do Setor", height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+    l_ramal.place(x=427,y=130)
+    
+    e_ramal_setor = Entry(frame_detalhes, width=35, justify='left', relief='solid')    
+    e_ramal_setor.place(x=427, y=155) 
+    
+    
+    
     
 #Funçâo para salvar
 def salvar():
