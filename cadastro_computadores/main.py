@@ -4,7 +4,6 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
-
 #importando pillow
 from PIL import ImageTk, Image
 
@@ -32,7 +31,7 @@ janela.title("")
 janela.geometry("850x620")
 janela.configure(background=co1)
 janela.resizable(width=FALSE, height=FALSE)
-janela.iconbitmap('imagens/BASP-DOM.ico')
+janela.iconbitmap('cadastro_computadores/imagens/BASP-DOM.ico')
 
 style = Style(janela)
 style.theme_use("clam")
@@ -63,7 +62,7 @@ frame_tabela.grid(row=5,column=0,padx=10,pady=0,sticky=NSEW)
 
 
 #Trabalhando no frame logo ------------------------------------
-app_lp = Image.open('C:/Users/suporteti/Desktop/Cadastro_computadores/imagens/logo.png')
+app_lp = Image.open('cadastro_computadores\imagens\logo.png')
 app_lp = app_lp.resize((50,50))
 app_lp = ImageTk.PhotoImage(app_lp)
 app_logo = Label(frame_logo, image=app_lp, text='Sistema de cadastro de computadores', width=850, compound=LEFT, relief=RAISED, anchor=NW, font=('Ivy 15 bold'), background=co6, fg=co1, padx=10)
@@ -118,13 +117,129 @@ def computadores():
     l_telefone.place(x=140, y=130)
     e_telefone = Entry(frame_detalhes, width=15, justify='left', relief='solid')
     e_telefone.place(x=140, y=160)
+    
+    #inserir problema
+    l_problema = Label(frame_detalhes, text="Problema *", height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+    l_problema.place(x=270, y=10)
+    e_problema = Entry(frame_detalhes, width=35, font=('Ivy 10'), justify='left', relief='solid')
+    e_problema.place(x=270, y=40)
+            
+    #linha separadora 
+    l_linha = Label(frame_detalhes, relief=GROOVE, text='h', width=1, height=100, anchor=NW, font=('Ivy 1'), bg=co0, fg=co0)
+    l_linha.place(x=252, y=70)    
+    l_linha = Label(frame_detalhes, relief=GROOVE, text='h', width=1, height=100, anchor=NW, font=('Ivy 1'), bg=co1, fg=co0)
+    l_linha.place(x=250, y=70)  
+     #linha separadora vertical
+    l_linha = Label(frame_detalhes, relief=GROOVE, text='h', width=300, height=1, anchor=NW, font=('Ivy 1'), bg=co0, fg=co0)
+    l_linha.place(x=250, y=72)    
+    l_linha = Label(frame_detalhes, relief=GROOVE, text='h', width=300, height=1, anchor=NW, font=('Ivy 1'), bg=co1, fg=co0)
+    l_linha.place(x=250, y=70)
 
+    #inserir retirado
+    l_retirado = Label(frame_detalhes, text="Retirado por:", height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+    l_retirado.place(x=270, y=80)
+    e_retirado = Entry(frame_detalhes, width=15, font=('Ivy 10'), justify='left', relief='solid')
+    e_retirado.place(x=270, y=110)
+    
+    # inserir data retirado
+    l_data_retirado = Label(frame_detalhes, text="Data Retirada ", height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+    l_data_retirado.place(x=270, y=140)
+    data_retirado = DateEntry(frame_detalhes, width=10, background='darkblue', foreground='white', borderwidth=2, year=2024)
+    data_retirado.place(x=270,y=170)
+    
+    #Botão pronto!
+    
+    def mostrar_estado():
+        estado = check_var.get()
+        if estado == True:
+            print("A caixa de seleção está marcada!")
+        else:
+            print("A caixa de seleção não está marcada.")
 
+    # Variável para armazenar o estado da caixa de seleção
 
+    check_var = BooleanVar()
+    
+    # Criando a caixa de seleção
+    pronto = Checkbutton(frame_detalhes, text="Pronto?", variable=check_var,bg=co1 ,onvalue=True, offvalue=False)
+    pronto.place(x=470, y=160)
+    
+    
+    #linha separadora
+    l_linha = Label(frame_detalhes, relief=GROOVE, text='h', width=1, height=100, anchor=NW, font=('Ivy 1'), bg=co0, fg=co0)
+    l_linha.place(x=552, y=10)    
+    
+    l_linha = Label(frame_detalhes, relief=GROOVE, text='h', width=1, height=100, anchor=NW, font=('Ivy 1'), bg=co1, fg=co0)
+    l_linha.place(x=555, y=10)  
 
+    # Procurar pc(por solicitante)    
 
+    l_solicitante2 = Label(frame_detalhes, text="Procurar PC [POR SOLICITANTE!] ", height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+    l_solicitante2.place(x=570, y=10)
+    e_solicitante2 = Entry(frame_detalhes, width=17, justify='left', relief='solid', font=('Ivy 10'))
+    e_solicitante2.place(x=575, y=40)
+    
+    botao_procurar_solicitante = Button(frame_detalhes, anchor=CENTER, text="Procurar", width=9, overrelief=RIDGE, font=('Ivy 10 bold'))
+    botao_procurar_solicitante.place(x=707,y=35)
 
+    #botões carregar, salvar, deletar
+    
+    #botão salvar
+    botao_salvar = Button(frame_detalhes, anchor=CENTER, text='Salvar'.upper(), width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co3, fg=co1)
+    botao_salvar.place(x=570, y=110)
+    
+    #botão atualizar
+    botao_atualizar = Button(frame_detalhes, anchor=CENTER, text='Atualizar'.upper(), width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co6, fg=co1)
+    botao_atualizar.place(x=570, y=135)
+    
+    #botão Deletar
+    botao_deletar = Button(frame_detalhes, anchor=CENTER, text='Deletar'.upper(), width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co7, fg=co1)
+    botao_deletar.place(x=570, y=160)
 
+    #botão ver
+    botao_ver = Button(frame_detalhes, anchor=CENTER, text='Ver'.upper(), width=9, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
+    botao_ver.place(x=730, y=120)
+    
+    #Tabela computadores
+    def mostrar_computadores():
+        app_nome = Label(frame_tabela, text="Tabela de computadores", height=1,pady=0, padx=0, relief="flat", anchor=NW, font=('Ivy 10 bold'), bg=co1, fg=co4)
+        app_nome.grid(row=0, column=0, padx=0, pady=10, sticky=NSEW)
+
+        #creating a treeview with dual scrollbars
+        list_header = ['ID','Bmp','Setor','Ramal','Solicitante', 'Telefone', 'Data solicitado', 'Problema', 'Pronto?', 'Data retirada', 'Retirado']
+
+        df_list = []
+
+        global tree_computador
+
+        tree_computador = ttk.Treeview(frame_tabela, selectmode="extended",columns=list_header, show="headings")
+
+        #vertical scrollbar
+        vsb = ttk.Scrollbar(frame_tabela, orient="vertical", command=tree_computador.yview)
+        #horizontal scrollbar
+        hsb = ttk.Scrollbar(frame_tabela, orient="horizontal", command=tree_computador.xview)
+
+        tree_computador.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+        tree_computador.grid(column=0, row=1, sticky='nsew')
+        vsb.grid(column=1, row=1, sticky='ns')
+        hsb.grid(column=0, row=2, sticky='ew')
+        frame_tabela.grid_rowconfigure(0, weight=12)
+
+        hd=["nw","nw","e","e"]
+        h=[75,150,80,60]
+        n=0
+
+        for col in list_header:
+            tree_computador.heading(col, text=col.title(), anchor=NW)
+        #adjust the column's width to the header string
+            tree_computador.column(col, width=h[n],anchor=hd[n])
+
+        n+=1
+
+        for item in df_list:
+            tree_computador.insert('', 'end', values=item)
+
+    mostrar_computadores()
 
 #detalhes da unidade --------------------------------------------------------------------
 #Função para adicionar unidades e setores FRAMES
@@ -166,12 +281,12 @@ def adicionar():
         imagem_string = imagem
 
         #abrindo a imagem
-        global l_imagem, imagem, imagem_string
-        imagem = Image.open(imagem)
-        imagem = imagem.resize((64, 64))  # Redimensiona a imagem conforme necessário
+        
+        imagem = Image.open(imagem).resize((64, 64),Image.ANTIALIAS)  # Redimensiona a imagem conforme necessário
+        imagem = imagem.convert("RGB")
         imagem = ImageTk.PhotoImage(imagem)
-        l_imagem = Label(frame_detalhes, image=imagem, bg=co1, fg=co4)
-        l_imagem.place(x=170, y=80)
+        l_imagem = Label(frame_detalhes, image=imagem)
+        l_imagem.place(x=130, y=90)
 
         botao_carregar['text'] = 'Trocar Dom'
 
@@ -389,14 +504,14 @@ def control(i):
 #Criando botões
 
 #botão de cadastro
-app_img_cadastro = Image.open('imagens/plus.png')
+app_img_cadastro = Image.open('cadastro_computadores\imagens\plus.png')
 app_img_cadastro = app_img_cadastro.resize((18,18))
 app_img_cadastro = ImageTk.PhotoImage(app_img_cadastro)
 app_cadastro = Button(frame_dados, command= lambda:control('cadastro'), image=app_img_cadastro, text='Cadastro', width=80, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
 app_cadastro.place(x=10, y=30)
 
 #botão de adicioar
-app_img_adicinar = Image.open('imagens/plus.png')
+app_img_adicinar = Image.open('cadastro_computadores\imagens\plus.png')
 app_img_adicinar = app_img_adicinar.resize((18,18))
 app_img_adicinar = ImageTk.PhotoImage(app_img_adicinar)
 app_adicionar = Button(frame_dados, command= lambda:control('adicionar'), image=app_img_adicinar, text='Adicionar', width=80, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
@@ -404,7 +519,7 @@ app_adicionar.place(x=123, y=30)
 
 
 #botão de salvar
-app_img_salvar = Image.open('imagens/save.png')
+app_img_salvar = Image.open('cadastro_computadores/imagens/save.png')
 app_img_salvar = app_img_salvar.resize((18,18))
 app_img_salvar = ImageTk.PhotoImage(app_img_salvar)
 app_salvar = Button(frame_dados, command= lambda:control('salvar'), image=app_img_salvar, text='Salvar', width=80, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
