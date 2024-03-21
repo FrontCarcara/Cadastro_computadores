@@ -16,7 +16,7 @@ except sqlite3.Error as e:
 def criar_unidades(i):
          with conexao:
              cursor = conexao.cursor()
-             query = "INSERT INTO unidades (nome, unidades_nome, domunidades) VALUES (?,?,?)"
+             query = "INSERT INTO unidades (nome, sigla) VALUES (?,?)"
              cursor.execute(query, i)
              
 #criar_unidades(['BASE AEREA DE SÃO PAULO','BASP','DOMBASP'])
@@ -36,7 +36,7 @@ def ver_unidades():
 def atulizar_unidades(i):
          with conexao:
              cursor = conexao.cursor()
-             query = "UPDATE unidades SET nome =?, unidades_nome=?, domunidades=? WHERE id=?"
+             query = "UPDATE unidades SET nome =?, unidade =? WHERE id=?"
              cursor.execute(query, i)
 l = ['BASE AEREA DE SAO PAULO','BASP','DOMBASP', 1]
 #atulizar_unidades(l)
@@ -44,8 +44,8 @@ l = ['BASE AEREA DE SAO PAULO','BASP','DOMBASP', 1]
 
 # Deletar as unidade (Delete D) CRUD
 def deletar_unidades(i):
-         with conexao:
-             cursor = conexao.cursor()
-             query = "DELETE FROM unidades WHERE id=?"
-             cursor.execute(query, i)
+    with conexao:
+        cursor = conexao.cursor()
+        query = "DELETE FROM unidades WHERE id=?"
+        cursor.execute(query, i)
 deletar_unidades([1])
