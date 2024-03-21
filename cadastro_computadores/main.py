@@ -11,6 +11,9 @@ from PIL import ImageTk, Image
 from tkcalendar import Calendar, DateEntry
 from datetime import date
 
+#importando view
+from view import *
+
 
 # cores
 co0 = "#2e2d2b"  # Preta
@@ -62,7 +65,7 @@ frame_tabela.grid(row=5,column=0,padx=10,pady=0,sticky=NSEW)
 
 
 #Trabalhando no frame logo ------------------------------------
-app_lp = Image.open('cadastro_computadores\imagens\logo.png')
+app_lp = Image.open('cadastro_computadores/imagens/logo.png')
 app_lp = app_lp.resize((50,50))
 app_lp = ImageTk.PhotoImage(app_lp)
 app_logo = Label(frame_logo, image=app_lp, text='Sistema de cadastro de computadores', width=850, compound=LEFT, relief=RAISED, anchor=NW, font=('Ivy 15 bold'), background=co6, fg=co1, padx=10)
@@ -255,6 +258,33 @@ def adicionar():
     frame_tabela_setores = Frame(frame_tabela, width=300,height=200,bg=co1)
     frame_tabela_setores.grid(row=0,column=2,pady=0,padx=0,sticky=NSEW)
     
+    #Detalhes da Unidade
+    #função nova unidade
+    def nova_unidade():
+        nome =  e_nome_unidade.get()
+        sigla = e_sigla_unidade.get()
+        
+        
+        lista = [nome, sigla]
+        #verificar se todos os campos estão preenchidos
+        for i in lista:
+            if i == '':
+                messagebox.showerror("Atenção", "Preencha todos os campos")
+                return
+        
+        #inserindo os dados
+        criar_unidades(lista)
+        
+        #mostrando mensagem de sucesso
+        messagebox.showinfo('Sucesso!','Os dados foram inseridos com suceso ')
+        
+        e_nome_unidade.delete(0, END)
+        e_sigla_unidade.delete(0, END)
+
+        #mostrar os valores na tabela
+        mostrar_unidades()
+        
+        
     #inserir unidade botão
     l_nome = Label(frame_detalhes, text="Nome da Unidade", height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
     l_nome.place(x=4,y=10)
@@ -267,34 +297,6 @@ def adicionar():
     e_sigla_unidade = Entry(frame_detalhes, width=20, justify='left', relief='solid')    
     e_sigla_unidade.place(x=7, y=100) 
     
-    #inserir dom botão
-    l_dom = Label(frame_detalhes, text="Dom da Unidade", height=1, anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-    l_dom.place(x=4, y=130)
-
-# Função para selecionar imagem
-
-    global l_imagem, imagem, imagem_string
-
-    def escolher_imagem():
-
-        imagem = fd.askopenfilename()
-        imagem_string = imagem
-
-        #abrindo a imagem
-        
-        imagem = Image.open(imagem).resize((64, 64),Image.ANTIALIAS)  # Redimensiona a imagem conforme necessário
-        imagem = imagem.convert("RGB")
-        imagem = ImageTk.PhotoImage(imagem)
-        l_imagem = Label(frame_detalhes, image=imagem)
-        l_imagem.place(x=130, y=90)
-
-        botao_carregar['text'] = 'Trocar Dom'
-
-    botao_carregar = Button(frame_detalhes, text="Selecionar Dom", command=escolher_imagem, width=20, compound=CENTER, overrelief=RIDGE,anchor=CENTER ,font=('Ivy 7'), bg=co1, fg=co0)
-    botao_carregar.place(x=7, y=160)
-
-    # Label para exibir a imagem selecionada
-
 
     #botões carregar, salvar, deletar
     
@@ -303,7 +305,7 @@ def adicionar():
     botao_salvar.place(x=147, y=160)
     
     #botão atualizar
-    botao_atualizar = Button(frame_detalhes, anchor=CENTER, text='Atualizar'.upper(), width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co6, fg=co1)
+    botao_atualizar = Button(frame_detalhes,command=nova_unidade, anchor=CENTER, text='Atualizar'.upper(), width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co6, fg=co1)
     botao_atualizar.place(x=227, y=160)
     
     #botão Deletar
@@ -317,7 +319,7 @@ def adicionar():
         app_nome.grid(row=0, column=0, padx=0, pady=10, sticky=NSEW)
 
         #creating a treeview with dual scrollbars
-        list_header = ['ID','Sigla','Unidade','Dom']
+        list_header = ['ID','Sigla','Unidade']
 
         df_list = []
 
@@ -337,7 +339,7 @@ def adicionar():
         frame_tabela_unidade.grid_rowconfigure(0, weight=12)
 
         hd=["nw","nw","e","e"]
-        h=[95,150,80,60]
+        h=[127,150,80,60]
         n=0
 
         for col in list_header:
@@ -504,14 +506,14 @@ def control(i):
 #Criando botões
 
 #botão de cadastro
-app_img_cadastro = Image.open('cadastro_computadores\imagens\plus.png')
+app_img_cadastro = Image.open('cadastro_computadores/imagens/plus.png')
 app_img_cadastro = app_img_cadastro.resize((18,18))
 app_img_cadastro = ImageTk.PhotoImage(app_img_cadastro)
 app_cadastro = Button(frame_dados, command= lambda:control('cadastro'), image=app_img_cadastro, text='Cadastro', width=80, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
 app_cadastro.place(x=10, y=30)
 
 #botão de adicioar
-app_img_adicinar = Image.open('cadastro_computadores\imagens\plus.png')
+app_img_adicinar = Image.open('cadastro_computadores/imagens/plus.png')
 app_img_adicinar = app_img_adicinar.resize((18,18))
 app_img_adicinar = ImageTk.PhotoImage(app_img_adicinar)
 app_adicionar = Button(frame_dados, command= lambda:control('adicionar'), image=app_img_adicinar, text='Adicionar', width=80, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
