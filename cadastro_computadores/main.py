@@ -34,7 +34,7 @@ janela.title("")
 janela.geometry("850x620")
 janela.configure(background=co1)
 janela.resizable(width=FALSE, height=FALSE)
-janela.iconbitmap('cadastro_computadores/imagens/BASP-DOM.ico')
+janela.iconbitmap('imagens/BASP-DOM.ico')
 
 style = Style(janela)
 style.theme_use("clam")
@@ -65,7 +65,7 @@ frame_tabela.grid(row=5,column=0,padx=10,pady=0,sticky=NSEW)
 
 
 #Trabalhando no frame logo ------------------------------------
-app_lp = Image.open('cadastro_computadores/imagens/logo.png')
+app_lp = Image.open('imagens/logo.png')
 app_lp = app_lp.resize((50,50))
 app_lp = ImageTk.PhotoImage(app_lp)
 app_logo = Label(frame_logo, image=app_lp, text='Sistema de cadastro de computadores', width=850, compound=LEFT, relief=RAISED, anchor=NW, font=('Ivy 15 bold'), background=co6, fg=co1, padx=10)
@@ -283,6 +283,57 @@ def adicionar():
 
         #mostrar os valores na tabela
         mostrar_unidades()
+       
+    #função atualizar curso
+    def atualizar_unidade():
+        try:
+            tree_itens = tree_unidade.focus()
+            tree_dicionario = tree_unidade.item(tree_itens)
+            tree_lista = tree_dicionario['values']
+            
+            valor_id = tree_lista[0]
+            
+            #inserindo os valores nas entries
+            
+            e_nome_unidade.insert(0, tree_lista[1])
+            e_sigla_unidade.insert(0, tree_lista[2])
+            
+            #função atualizar
+            def update():
+            
+                nome =  e_nome_unidade.get()
+                sigla = e_sigla_unidade.get()
+                
+    
+                lista = [nome, sigla, valor_id]
+                #verificar se todos os campos estão preenchidos
+                for i in lista:
+                    if i == '':
+                        messagebox.showerror("Atenção", "Preencha todos os campos")
+                        return
+                
+                #atualizando os dados
+                atualizar_unidade(lista)
+                
+                #mostrando mensagem de sucesso
+                messagebox.showinfo('Sucesso!','Os dados foram inseridos com suceso ')
+                
+                e_nome_unidade.delete(0, END)
+                e_sigla_unidade.delete(0, END)
+
+                #mostrar os valores na tabela
+                mostrar_unidades() 
+
+                #destruir botão salvar apos salvar os dados
+
+                botao_confirmar.destroy()
+                
+            #botão comfirmar
+            botao_confirmar = Button(frame_detalhes, anchor=CENTER,command=update, text='Salvar atualização'.upper(), overrelief=RIDGE, font=('Ivy 7 bold'), bg=co3, fg=co1)
+            botao_confirmar.place(x=227, y=130)
+        
+        except IndexError:
+            messagebox.showerror('Erro', 'Selecione uma das unidades da tabela')
         
         
     #inserir unidade botão
@@ -301,11 +352,11 @@ def adicionar():
     #botões carregar, salvar, deletar
     
     #botão salvar
-    botao_salvar = Button(frame_detalhes, anchor=CENTER, text='Salvar'.upper(), width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co3, fg=co1)
+    botao_salvar = Button(frame_detalhes, anchor=CENTER,command=nova_unidade, text='Salvar'.upper(), width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co3, fg=co1)
     botao_salvar.place(x=147, y=160)
     
     #botão atualizar
-    botao_atualizar = Button(frame_detalhes,command=nova_unidade, anchor=CENTER, text='Atualizar'.upper(), width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co6, fg=co1)
+    botao_atualizar = Button(frame_detalhes, anchor=CENTER, command= atualizar_unidade, text='Atualizar'.upper(), width=10, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co6, fg=co1)
     botao_atualizar.place(x=227, y=160)
     
     #botão Deletar
@@ -319,10 +370,10 @@ def adicionar():
         app_nome.grid(row=0, column=0, padx=0, pady=10, sticky=NSEW)
 
         #creating a treeview with dual scrollbars
-        list_header = ['ID','Sigla','Unidade']
+        list_header = ['ID','Unidade','Sigla']
 
-        df_list = []
-
+        df_list = ver_unidades()
+      
         global tree_unidade
 
         tree_unidade = ttk.Treeview(frame_tabela_unidade, selectmode="extended",columns=list_header, show="headings")
@@ -506,14 +557,14 @@ def control(i):
 #Criando botões
 
 #botão de cadastro
-app_img_cadastro = Image.open('cadastro_computadores/imagens/plus.png')
+app_img_cadastro = Image.open('imagens/plus.png')
 app_img_cadastro = app_img_cadastro.resize((18,18))
 app_img_cadastro = ImageTk.PhotoImage(app_img_cadastro)
 app_cadastro = Button(frame_dados, command= lambda:control('cadastro'), image=app_img_cadastro, text='Cadastro', width=80, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
 app_cadastro.place(x=10, y=30)
 
 #botão de adicioar
-app_img_adicinar = Image.open('cadastro_computadores/imagens/plus.png')
+app_img_adicinar = Image.open('imagens/plus.png')
 app_img_adicinar = app_img_adicinar.resize((18,18))
 app_img_adicinar = ImageTk.PhotoImage(app_img_adicinar)
 app_adicionar = Button(frame_dados, command= lambda:control('adicionar'), image=app_img_adicinar, text='Adicionar', width=80, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
@@ -521,7 +572,7 @@ app_adicionar.place(x=123, y=30)
 
 
 #botão de salvar
-app_img_salvar = Image.open('cadastro_computadores/imagens/save.png')
+app_img_salvar = Image.open('imagens/save.png')
 app_img_salvar = app_img_salvar.resize((18,18))
 app_img_salvar = ImageTk.PhotoImage(app_img_salvar)
 app_salvar = Button(frame_dados, command= lambda:control('salvar'), image=app_img_salvar, text='Salvar', width=80, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
