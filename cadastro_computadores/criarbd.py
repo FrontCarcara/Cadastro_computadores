@@ -29,9 +29,9 @@ try:
         cursor.execute(''' CREATE TABLE IF NOT EXISTS setores(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome TEXT,
-            ramal TEXT,
             unidade TEXT,
-            FOREIGN KEY (unidade) REFERENCES unidades (nome) ON UPDATE CASCADE ON DELETE CASCADE
+            ramal TEXT,
+            FOREIGN KEY (unidade) REFERENCES unidades (sigla) ON UPDATE CASCADE ON DELETE CASCADE
         )''' )
         print('---Tabela Setores criada com sucesso!')
 except sqlite3.Error as e:
@@ -44,19 +44,18 @@ try:
         cursor.execute(''' CREATE TABLE IF NOT EXISTS computadores(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             bmp TEXT,
-            ramal REAL,
-            data_solicitado DATE,
-            data_retirada DATE,
-            solicitador TEXT,
-            retirado TEXT,
-            problema TEXT,
-            telefone TEXT,
-            pronto BOOLEAN,
             setor TEXT,
-            FOREIGN KEY (setor) REFERENCES setores (unidade) ON DELETE CASCADE
+            ramal REAL,
+            solicitador TEXT,
+            telefone TEXT,
+            data_solicitado DATE,
+            problema TEXT,
+            pronto BOOLEAN,
+            data_retirada DATE,
+            retirado TEXT,
+            FOREIGN KEY (setor) REFERENCES setores (nome) ON DELETE CASCADE
         )''' )
         print('---Tabela computadores criada com sucesso!')
 except sqlite3.Error as e:
     print(f'---Erro ao criar a tabela computadores: {e}')  
     
-   
