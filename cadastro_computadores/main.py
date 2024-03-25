@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
+from ttkthemes import *
 #importando pillow
 from PIL import ImageTk, Image
 
@@ -13,6 +14,10 @@ from datetime import date
 
 #importando view
 from view import *
+
+#importando pandas
+import pandas as pd
+import openpyxl
 
 
 # cores
@@ -30,7 +35,7 @@ co9 = "#e9edf5"   # + verde
 
 #Criando janela
 janela = Tk()
-janela.title("")
+janela.title("Sistema de cadastro de computadores DCTI-BASP                             v.beta.0.1                                                          (by Frontelli)")
 janela.geometry("850x620")
 janela.configure(background=co1)
 janela.resizable(width=FALSE, height=FALSE)
@@ -68,7 +73,7 @@ frame_tabela.grid(row=5,column=0,padx=10,pady=0,sticky=NSEW)
 app_lp = Image.open('imagens/logo.png')
 app_lp = app_lp.resize((50,50))
 app_lp = ImageTk.PhotoImage(app_lp)
-app_logo = Label(frame_logo, image=app_lp, text='Sistema de cadastro de computadores', width=850, compound=LEFT, relief=RAISED, anchor=NW, font=('Ivy 15 bold'), background=co6, fg=co1, padx=10)
+app_logo = Label(frame_logo, image=app_lp, text='                        Sistema de cadastro de computadores DCTI-BASP', width=850, compound=LEFT, relief=RAISED, anchor=NW, font=('Ivy 15 bold'), background=co6, fg=co1, padx=10)
 app_logo.place(x=0, y=0)
 
 #Função para cadastrar computadores
@@ -816,7 +821,26 @@ def adicionar():
     
 #Funçâo para salvar
 def salvar():
-    print('salvar')
+    #Criando botões
+    
+    #função para confirmar
+    def confirmar_excel():
+        global app_excel2
+        app_excel2 = Button(frame_detalhes, command=confirmar_excel2, text='Comfirmar exportação', width=15, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
+        app_excel2.place(x=35, y=50)
+        
+    def confirmar_excel2():
+        global app_excel2
+        #chamando a função de exportar para excel
+        exportar_excel(conexao)
+        #excluir o botçao confirmar
+        messagebox.showinfo('Sucesso','Banco de dados exportado para excel com sucesso!')
+        app_excel2.destroy()
+        
+ 
+    #botão de exportar para excel
+    app_excel = Button(frame_detalhes, command=confirmar_excel, text='Importar para Excel', width=15, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
+    app_excel.place(x=35, y=50)
 
 
 
@@ -861,23 +885,23 @@ def control(i):
 app_img_cadastro = Image.open('imagens/plus.png')
 app_img_cadastro = app_img_cadastro.resize((18,18))
 app_img_cadastro = ImageTk.PhotoImage(app_img_cadastro)
-app_cadastro = Button(frame_dados, command= lambda:control('cadastro'), image=app_img_cadastro, text='Cadastro', width=80, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
+app_cadastro = Button(frame_dados, command= lambda:control('cadastro'), image=app_img_cadastro, text='Computadores', width=130, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
 app_cadastro.place(x=10, y=30)
 
 #botão de adicioar
 app_img_adicinar = Image.open('imagens/plus.png')
 app_img_adicinar = app_img_adicinar.resize((18,18))
 app_img_adicinar = ImageTk.PhotoImage(app_img_adicinar)
-app_adicionar = Button(frame_dados, command= lambda:control('adicionar'), image=app_img_adicinar, text='Adicionar', width=80, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
-app_adicionar.place(x=123, y=30)
+app_adicionar = Button(frame_dados, command= lambda:control('adicionar'), image=app_img_adicinar, text='Unidades e setores', width=150, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
+app_adicionar.place(x=163, y=30)
 
 
 #botão de salvar
 app_img_salvar = Image.open('imagens/save.png')
 app_img_salvar = app_img_salvar.resize((18,18))
 app_img_salvar = ImageTk.PhotoImage(app_img_salvar)
-app_salvar = Button(frame_dados, command= lambda:control('salvar'), image=app_img_salvar, text='Salvar', width=80, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
-app_salvar.place(x=237, y=30)
+app_salvar = Button(frame_dados, command= lambda:control('salvar'), image=app_img_salvar, text='Salvar como', width=125, compound=LEFT, overrelief= RIDGE, font=('Ivy 11'), background=co1, fg=co0, padx=7)
+app_salvar.place(x=337, y=30)
 
 #Executar a janela em cadastro de computadores
 computadores()
