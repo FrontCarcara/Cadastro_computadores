@@ -1,6 +1,7 @@
 #importando SQLITE3
 import sqlite3
-
+import pandas as pd
+import openpyxl
 #criando conexao
 try:
     conexao = sqlite3.connect('cadastro_pcs.db')
@@ -127,4 +128,12 @@ def procurar_computador(solicitador):
         dados = cursor.fetchall()
                 
         return dados
+
+def exportar_excel(conexao):
+    conexao = sqlite3.connect('cadastro_pcs.db')
+    # Ler tabela do banco de dados e criar um dataframe
+    df = pd.read_sql('SELECT * FROM computadores', conexao)
+
+    # Exportar dataframe para o formato Excel
+    df.to_excel(r'banco de dados excel/computadores.xlsx', index=False)
 
